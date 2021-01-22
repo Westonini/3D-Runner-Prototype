@@ -57,7 +57,7 @@ public class PlayerAnimations : MonoBehaviour
 
     IEnumerator JumpAnimFinish()
     {
-        yield return new WaitForSeconds(0.575f);
+        yield return new WaitForSeconds(0.55f);
         anim.SetBool("Jump", false);
     }
 }
