@@ -36,7 +36,7 @@ public class PlayerActions : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump") && gc.GetGC())
+        if (Input.GetButtonDown("Jump") && gc.GetGC() && autoRun.GetToggleRun())
             PE.CallPlayerJump();
     }
 

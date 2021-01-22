@@ -4,35 +4,32 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
+    private RaycastHit hit;
     private bool isTouching = false;
-    List<GameObject> groundObjects = new List<GameObject>();
+    private int layerMask;
+
+    private void Awake()
+    {
+        layerMask = LayerMask.GetMask("Tile");
+    }
 
     public bool GetGC()
     {
         return isTouching;
     }
 
-    //Ground Check
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        // Does the ray intersect any objects in the layermask
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.6f, layerMask))
         {
-            if (!groundObjects.Contains(other.gameObject))
-            {
-                groundObjects.Add(other.gameObject);
-                isTouching = true;
-            }
+            Debug.Log("Did Hit");
+            isTouching = true;
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        else
         {
-            groundObjects.Remove(other.gameObject);
-
-            if (groundObjects.Count == 0)
-                isTouching = false;
+            Debug.Log("Did not Hit");
+            isTouching = false;
         }
     }
 }
