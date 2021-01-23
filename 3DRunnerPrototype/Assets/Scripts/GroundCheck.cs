@@ -13,7 +13,21 @@ public class GroundCheck : MonoBehaviour
         layerMask = LayerMask.GetMask("Tile");
     }
 
-    public bool GetGC()
+    private void SetGC(bool TF) //Sets the ground check
+    {
+        if (TF && !GetGC())
+        {
+            Debug.Log("Grounded");
+            isTouching = true;
+        }
+        else if (!TF && GetGC())
+        {
+            Debug.Log("Not Grounded");
+            isTouching = false;
+        }
+    }
+
+    public bool GetGC() //Gets the ground check
     {
         return isTouching;
     }
@@ -24,13 +38,11 @@ public class GroundCheck : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 5f, layerMask))
         {
             //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-            Debug.Log("Grounded");
-            isTouching = true;
+            SetGC(true);
         }
         else
         {
-            Debug.Log("Not Grounded");
-            isTouching = false;
+            SetGC(false);
         }
     }
 }
